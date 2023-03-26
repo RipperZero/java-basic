@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zero.mapper.UserMapper">
+	<select id="findAll" resultType="com.zero.pojo.User">
+		select * from pf_users;
+	</select>
+
+	<select id="count" resultType="long">
+		select count(1) from pf_users;
+	</select>
+
+	<select id="findByPager" resultType="com.zero.pojo.User">
+		select * from pf_users limit
+		#{page},#{size};
+	</select>
+
+	<select id="findUserInfo" resultType="com.zero.pojo.User">
+		select
+		id,idcard,username,email,mobile,valid,created_time,modified_time,created_user,modified_user
+		from pf_users;
+	</select>
+
+	<select id="findUserInfoByUserName"
+		resultType="com.zero.pojo.User">
+		select * from
+		pf_users where username = #{username}
+	</select>
+
+	<insert id="saveUser" parameterType="com.zero.pojo.User"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into pf_users
+		(idcard,username,password,salt,mobile,email,valid,created_time,modified_time,created_user,modified_user)
+		values
+		(#{idcard},#{username},#{password},#{salt},#{mobile},#{email},#{valid},#{createdTime},#{modifiedTime},#{createdUser},#{modifiedUser});
+	</insert>
+
+	<update id="updateUser" parameterType="com.zero.pojo.User">
+		update pf_users
+		set idcard
+		= #{idcard},
+		username = #{username},
+		password = #{password},
+		salt =
+		#{salt},
+		mobile = #{mobile},
+		email = #{email},
+		valid = #{valid},
+		modified_time = #{modifiedTime}
+		where id = #{id}
+	</update>
+</mapper>
